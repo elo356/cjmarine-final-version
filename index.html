@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CJ Marine</title>
+    <!-- fontawesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- bootstrap css -->
+    <link rel = "stylesheet" href = "bootstrap-5.0.2-dist/css/bootstrap.min.css">
+    <!-- main css -->
+    <link rel = "stylesheet" href = "css/main.css">
+    <!-- AOS Animate On Scroll CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"/>
+    <!-- Responsive/mobile fixes -->
+    <style>
+      /* General: prevent horizontal scrolling and make media fluid */
+      html, body { width: 100%; }
+      body { overflow-x: hidden; }
+      img, video { max-width: 100%; height: auto; display: block; }
+   :root { --pink: #2563eb; }
+
+      /* Navbar logo and brand text */
+      .navbar-logo-responsive {
+        max-height: 44px;
+        height: auto;
+        width: auto;
+      }
+      @media (min-width: 768px) {
+        .navbar-logo-responsive { max-height: 56px; }
+      }
+      .navbar-brand span {
+        font-size: 1.5rem !important;
+        white-space: normal !important; /* override inline nowrap on small screens */
+      }
+      @media (min-width: 576px) {
+        .navbar-brand span { font-size: 1.75rem !important; }
+      }
+
+      /* CTA button in header */
+      .btn-connect-now {
+        display: inline-block;
+        padding: 0.75rem 1.25rem;
+        font-size: 1rem;
+        border-radius: 999px;
+        background: #0d6efd;
+        color: #fff;
+        text-decoration: none;
+        box-shadow: 0 6px 18px rgba(13,110,253,.25);
+      }
+      .btn-connect-now:hover { background: #0b5ed7; }
+      @media (min-width: 576px) {
+        .btn-connect-now { padding: 0.9rem 1.4rem; font-size: 1.05rem; }
+      }
+
+      /* Brand slider: keep logos in line and contained */
+      .brand-slider-box { padding: 0 12px; }
+      .brand-slider { padding-left: 8px; padding-right: 8px; }
+      .brand-slider-track {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .brand-slider-track img {
+        max-height: 40px;
+        width: auto;
+        flex: 0 0 auto;
+        object-fit: contain;
+      }
+      @media (min-width: 768px) {
+        .brand-slider-track img { max-height: 56px; }
+      }
+
+      /* Showroom video: constrain height and keep aspect */
+      .showroom-video {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 12px;
+      }
+      .showroom-video video {
+        width: 100%;
+        max-height: 50vh;
+        border-radius: 16px;
+        object-fit: cover;
+      }
+      @media (min-width: 992px) {
+        .showroom-video video { max-height: 70vh; }
+      }
+
+      /* Reduce big spacer divs on small screens */
+      @media (max-width: 576px) {
+        div[style*="height:96px"] { height: 32px !important; }
+        div[style*="height:128px"] { height: 48px !important; }
+      }
+
+  /* Header video background */
+  #header {
+    position: relative;
+    min-height: 100vh;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #101828; /* fallback color */
+  }
+  #header .header-bg-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    background: #101828;
+  }
+  #header .header-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(37,99,235,0.18) 0%, rgba(16,24,39,0.32) 100%);
+    z-index: 2;
+    pointer-events: none;
+  }
+  #header .header-content {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 120px 16px 80px;
+    text-align: center;
+    color: #fff;
+  }
+  #header .header-title {
+    font-family: var(--lg-font, serif);
+    font-weight: 800;
+    font-size: clamp(2.2rem, 1.2rem + 2.8vw, 3.2rem);
+    margin-bottom: 1rem;
+    color: #fff;
+    text-shadow: 0 2px 16px rgba(16,24,39,0.18);
+  }
+  #header .header-subtitle {
+    font-size: clamp(1.1rem, 1rem + 1vw, 1.5rem);
+    margin-bottom: 2rem;
+    color: #e3e8f0;
+    text-shadow: 0 2px 12px rgba(16,24,39,0.14);
+  }
+  #header .btn-connect-now {
+    font-size: 1.15rem;
+    padding: 0.85rem 2.1rem;
+    border-radius: 999px;
+    box-shadow: 0 6px 24px rgba(37,99,235,0.13);
+  }
+    </style>
+</head>
+<body>
+    
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 fixed-top shadow-sm" nav>
+        <div class="container-fluid px-3 px-md-4">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html" style="min-width:0;">
+                <img src="image/logo/logo3-removebg-preview.png" alt="site icon" class="d-inline-block align-text-top me-2 navbar-logo-responsive">
+                <span class="text-uppercase fw-lighter" style="font-size:2rem; white-space:nowrap;">CJ Marine</span>
+            </a>
+            <button class="navbar-toggler border-0 ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse mt-3 mt-lg-0" id="navMenu">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-center gap-lg-2">
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase text-dark" href="#header">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase text-dark" href="#info">Información</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase text-dark" href="#brand">Marcas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase text-dark" href="#showroom">Showroom</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase text-dark" href="#contacto">Contáctanos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- end of navbar -->
+
+    <!-- header -->
+    <header id="header">
+  <video class="header-bg-video" src="image/2099332-hd_1920_1080_30fps.mp4" type="video/mp4" autoplay loop muted playsinline></video>
+  <div class="header-overlay"></div>
+  <div class="header-content">
+    <h1 class="header-title">Mejor trato, Mejor Precio!</h1>
+    <p class="header-subtitle">Piezas, accesorios y servicio para que siempre estés listo para navegar.</p>
+    <a href="#contacto" class="btn-connect-now">¡Contáctanos ahora!</a>
+    
+  </div>
+
+</header>              
+
+    <!-- end of header -->
+
+
+    <!-- información de la tienda -->
+    <section id="info" class="py-5 bg-light" data-aos="fade-up" data-aos-duration="600">
+      <div class="container">
+
+        <div class="row justify-content-center mb-5">
+          <div class="col-lg-8 text-center" data-aos="fade-down" data-aos-delay="100">
+            <h1 class="fw-bold mb-3 text-primary">Información de la tienda</h1>
+            <p class="lead text-muted">
+              </br> </br>En CJ Marine trabajamos para que cada salida al mar sea una experiencia segura, cómoda y llena de disfrute. Somos especialistas en piezas de botes, 
+              accesorios náuticos, ropa y propelas, ofreciendo siempre productos de calidad respaldados por un servicio confiable.
+            </br> </br> Nuestra prioridad es atenderle con cercanía y profesionalismo, brindándole soluciones rápidas y efectivas para que su embarcación esté 
+            siempre lista. Ya sea que busque mantenimiento, repuestos o complementar su estilo de vida náutico, aquí encontrará todo en un solo lugar.
+            </br> </br>Más que una tienda, somos su aliado en el mar.
+            </p>
+          </div>
+        </div>
+        <div class="row g-4">
+          <!-- Nuevo: Horario (banner, antes de Misión y Visión) -->
+          <div class="col-12" data-aos="zoom-in" data-aos-delay="120">
+            <div class="info-hours p-4 p-md-5 rounded-4 shadow-sm d-flex flex-column flex-md-row align-items-center gap-3">
+              <!-- Reworked: icon inside h3 and same classes as Misión/Visión -->
+              <div class="text-center text-md-start">
+                <h3 class="text-primary mb-3">
+                  <i class="fas fa-clock me-2"></i>Horario
+                </h3>
+                <p class="mb-0">
+                  <strong>Lunes a Viernes:</strong> 9:00 a.m. - 5:00 p.m. •
+                  <strong>Sábados:</strong> 9:00 a.m. - 4:00 p.m.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6" data-aos="fade-right" data-aos-delay="150">
+            <div class="p-4 bg-white shadow rounded h-100">
+              <h3 class="text-primary mb-3"><i class="fas fa-bullseye me-2"></i>Misión</h3>
+              <p class="mb-0">
+                 CJ Marine tiene como misión convertirse en la tienda líder de piezas y accesorios de botes, ofreciendo calidad y variedad
+              incomparable, convirtiéndose en el referente para todos los entusiastas de la navegación combinado con un servicio dedicado, personalizado
+              y profesional para alcanzar, de esta manera, el éxito de la empresa.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6" data-aos="fade-left" data-aos-delay="200">
+            <div class="p-4 bg-white shadow rounded h-100">
+              <h3 class="text-primary mb-3"><i class="fas fa-eye me-2"></i>Visión</h3>
+              <p class="mb-0">
+                CJ Marine tiene como visión convertirse en la empresa líder en la industria de ventas de piezas y accesorios de botes en Aguadilla y 
+                municipios limítrofes, posicionarse en la mente del consumidor como el lugar donde puede conseguir lo que necesita, como lo necesita
+                y al precio que lo puede pagar fomentando la pasión por la navegación y contribuyendo al crecimiento de la comunidad náutica.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="info-separator" data-aos="fade-in" data-aos-delay="50"></div>
+    <!-- fin información de la tienda -->
+
+    <!-- Sección Marcas Trabajadas -->
+    <section id="brand" class="py-5" style="background: linear-gradient(120deg, #e0e7ef 0%, #f8fafc 100%);" data-aos="fade-up" data-aos-duration="600">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="zoom-in" data-aos-delay="100">
+                <h2 class="display-4 fw-bold text-primary mb-3">Marcas Trabajadas</h2>
+                <p class="lead text-dark mb-4">Somos dealer autorizado y distribuimos piezas, lubricantes y accesorios originales de las mejores marcas náuticas.</p>
+            </div>
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-8" data-aos="fade-up" data-aos-delay="150">
+                    <ul class="list-unstyled fs-5 text-center mb-5">
+                        <li class="mb-2"><strong>Dealer Autorizado Yamaha</strong> &bull; <strong>Dealer Autorizado Suzuki</strong></li>
+                        <li class="mb-2">Piezas: Johnson, Evinrude, Yamaha, Suzuki, OMC, Volvo, Mercury, Mercrusier</li>
+                        <li class="mb-2">Lubricantes: Yamaha, Mercury, Motul, Suzuki</li>
+                        <li class="mb-2">Luces: Lumitec</li>
+                        <li class="mb-2">Propelas: Solas, Power Tech, Rubex, EMP, Michigan</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Slider de logos de marcas -->
+            <div class="brand-slider-box mx-auto" style="max-width:900px;" data-aos="fade-up" data-aos-delay="200">
+                <div class="brand-slider position-relative overflow-hidden py-4 rounded-4 shadow-lg bg-white">
+                    <div class="brand-slider-track">
+                        <img src="image/logo/brands/10a7dfaa3fb331e15bb0491016f6c162.png" alt="Marca" />
+                        <img src="image/logo/brands/6676c187ee3d1e43e49f6e70ace26304.png" alt="Marca" />
+                        <img src="image/logo/brands/6d93e7bb997472ac6c6560416223948a.png" alt="Marca" />
+                        <img src="image/logo/brands/78a96874d0398283c2a06f35aeb11487.png" alt="Marca" />
+                        <img src="image/logo/brands/a260873b72960503a6781c9e9aa31054.png" alt="Marca" />
+                        <img src="image/logo/brands/a5ab6adfe82dd6a61cd29aff1baae266.png" alt="Marca" />
+                        <img src="image/logo/brands/idlWcRdvw__1758774559626.png" alt="Marca" />
+                        <img src="image/logo/brands/image2s.png" alt="Marca" />
+                        <img src="image/logo/brands/imageass.jpeg" alt="Marca" />
+                        <img src="image/logo/brands/images.png" alt="Marca" />
+                        <img src="image/logo/brands/images2.png" alt="Marca" />
+                        <img src="image/logo/brands/powertechlogo.png" alt="Marca" />
+                        <!-- Duplicado para animación continua -->
+                        <img src="image/logo/brands/10a7dfaa3fb331e15bb0491016f6c162.png" alt="Marca" />
+                        <img src="image/logo/brands/6676c187ee3d1e43e49f6e70ace26304.png" alt="Marca" />
+                        <img src="image/logo/brands/6d93e7bb997472ac6c6560416223948a.png" alt="Marca" />
+                        <img src="image/logo/brands/78a96874d0398283c2a06f35aeb11487.png" alt="Marca" />
+                        <img src="image/logo/brands/a260873b72960503a6781c9e9aa31054.png" alt="Marca" />
+                        <img src="image/logo/brands/a5ab6adfe82dd6a61cd29aff1baae266.png" alt="Marca" />
+                        <img src="image/logo/brands/idlWcRdvw__1758774559626.png" alt="Marca" />
+                        <img src="image/logo/brands/image2s.png" alt="Marca" />
+                        <img src="image/logo/brands/imageass.jpeg" alt="Marca" />
+                        <img src="image/logo/brands/images.png" alt="Marca" />
+                        <img src="image/logo/brands/images2.png" alt="Marca" />
+                        <img src="image/logo/brands/powertechlogo.png" alt="Marca" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fin Sección Marcas Trabajadas -->
+
+    <!-- Sección Showroom -->
+    <section id="showroom" class="bg-white" data-aos="fade-up" data-aos-duration="600">
+        <div class="container">
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-8 text-center" data-aos="fade-down" data-aos-delay="100">
+             
+                    <h2 class="display-5 fw-bold mb-3 text-primary"></br>Showroom</h2></br>
+                    <p class="lead text-muted">Descubre nuestra tienda: calidad, variedad y estilo para tu experiencia náutica.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Texto arriba del carrusel -->
+        <div class="text-center mb-4" style="font-size:1.25rem; color:#2563eb; font-weight:500;">
+        </br>
+        </div>
+        <!-- Video fuera del .container para ancho completo -->
+        <div class="showroom-video" data-aos="zoom-in" data-aos-delay="150">
+            <video src="image/vid.mp4" poster="image/showroom/show1.jpeg" autoplay loop muted playsinline class="showroom-video enhanced-video"></video>
+        </div>
+        <!-- Espacio y texto entre video y carrusel -->
+        <div style="height:96px;"></div>
+        <div class="text-center mb-4" style="font-size:1.25rem; color:#384258; font-weight:500;">
+            <p>Explora nuestro showroom virtual y conoce nuestra tienda por dentro. Vive la experiencia de visitarnos y descubre todo lo que tenemos preparado para ti.</br></br></br></br></br></p>
+        </div>
+        <!-- Carrusel con más espacio debajo -->
+        <div class="showroom-carousel-custom position-relative" data-aos="fade-up" data-aos-delay="200" style="max-width:100vw;margin:0 auto;">
+            <button class="showroom-btn showroom-btn-left" id="showroomPrev"><i class="fas fa-chevron-left"></i></button>
+            <div class="showroom-track-wrapper-cards overflow-hidden">
+                <div class="showroom-track-cards d-flex align-items-center" id="showroomTrack">
+                    <div class="showroom-card showroom-img-custom"><img src="image/showroom/show1.jpeg" alt="Showroom 1"></div>
+                    <div class="showroom-card showroom-img-custom"><img src="image/showroom/show2.jpeg" alt="Showroom 2"></div>
+                    <div class="showroom-card showroom-img-custom"><img src="image/showroom/show3.jpeg" alt="Showroom 3"></div>
+                    <div class="showroom-card showroom-img-custom"><img src="image/showroom/show4.jpeg" alt="Showroom 4"></div>
+                    <div class="showroom-card showroom-img-custom"><img src="image/showroom/show5.jpeg" alt="Showroom 5"></div>
+                    <div class="showroom-card showroom-img-custom"><img src="image/showroom/show6.jpeg" alt="Showroom 6"></div>
+                    <div class="showroom-card showroom-img-custom"><img src="image/showroom/show7.jpeg" alt="Showroom 7"></div>
+                    <div class="showroom-card showroom-img-custom"><img src="image/showroom/show8.jpeg" alt="Showroom 8"></div>
+                    <div class="showroom-card showroom-img-custom"><img src="image/showroom/show9.jpeg" alt="Showroom 9"></div>
+                    <div class="showroom-card showroom-img-custom"><img src="image/showroom/show10.jpeg" alt="Showroom 10"></div>
+                    <div class="showroom-card showroom-img-custom"><img src="image/showroom/show11.jpeg" alt="Showroom 11"></div>
+                    <div class="showroom-card showroom-img-custom"><img src="image/showroom/show12.jpeg" alt="Showroom 12"></div>
+                    <div class="showroom-card showroom-img-custom"><img src="image/showroom/show13.jpeg" alt="Showroom 13"></div>
+                    <div class="showroom-card showroom-img-custom"><img src="image/showroom/show14.jpeg" alt="Showroom 14"></div>
+                    <div class="showroom-card showroom-img-custom"><img src="image/showroom/show15.jpeg" alt="Showroom 15"></div>
+                    <div class="showroom-card showroom-img-custom"><img src="image/showroom/show17.jpeg" alt="Showroom 17"></div>
+                </div>
+            </div>
+            <button class="showroom-btn showroom-btn-right" id="showroomNext"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <!-- Espacio extra debajo del carrusel -->
+        <div style="height:128px;"></div>
+        <div class="container">
+            <!-- ...existing code... -->
+        </div>
+    </section>
+    <!-- Sección de Contacto -->
+
+    <section id="contacto" class="bg-light" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;" data-aos="fade-up" data-aos-duration="600">
+        <div class="container">
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-7 text-center" data-aos="fade-down" data-aos-delay="100">
+                    <h2 class="display-5 fw-bold mb-3 text-primary">Contáctanos</h2>
+                    <p class="lead text-muted">¿Tienes preguntas o necesitas una cotización? Completa el formulario y te responderemos pronto.</p>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-stretch">
+                <div class="col-lg-6 mb-4" data-aos="fade-right" data-aos-delay="150">
+                    <form id="contactForm" class="p-4 rounded-4 shadow-sm bg-white border border-2" 
+      style="max-width: 480px; margin: auto; font-family: 'Segoe UI', 'Arial', sans-serif;">
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control border-0 border-bottom rounded-0 bg-light" 
+               id="nombre" name="nombre" placeholder="Nombre" required>
+        <label for="nombre" class="text-secondary">Nombre completo</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control border-0 border-bottom rounded-0 bg-light" 
+               id="email" name="email" placeholder="Correo electrónico" required>
+        <label for="email" class="text-secondary">Correo electrónico</label>
+    </div>
+    <div class="form-floating mb-3">
+        <select class="form-select border-0 border-bottom rounded-0 bg-light" 
+                id="causa" name="causa" required aria-label="Motivo del mensaje">
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option value="pieza">Pieza</option>
+            <option value="ropa">Ropa</option>
+            <option value="servicio">Servicio</option>
+            <option value="cotizacion">Cotización</option>
+            <option value="otro">Otro</option>
+        </select>
+        <label for="causa" class="text-secondary">Motivo del mensaje</label>
+    </div>
+    <div class="form-floating mb-4">
+        <textarea class="form-control border-0 border-bottom rounded-0 bg-light" 
+                  placeholder="Mensaje" id="mensaje" name="mensaje" 
+                  style="height: 120px; min-height: 80px;" required></textarea>
+        <label for="mensaje" class="text-secondary">Mensaje</label>
+    </div>
+    <div class="d-grid">
+        <button type="submit" class="btn btn-dark btn-lg rounded-3 fw-semibold shadow-none">
+            Enviar
+        </button>
+    </div>
+</form>
+
+                </div>
+                <div class="col-lg-6 mb-4 d-flex align-items-stretch" data-aos="fade-left" data-aos-delay="200">
+                    <div class="w-100 rounded-4 overflow-hidden shadow" style="min-height: 60vh; height: 100%;">
+                        <iframe src="https://www.google.com/maps?q=CJ%20Marine%20Aguadilla&z=15&output=embed" width="100%" height="100%" style="border:0; min-height: 60vh; height: 100%; width: 100%;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class = "bg-dark py-5">
+        <div class = "footer-container">
+            <div class = "row text-white g-4">
+                <div class = "col-md-6 col-lg-3">
+                    <a class = "text-uppercase text-decoration-none brand text-white" href = "index.html">CJ Marine</a>
+                    <p class = "text-white text-muted mt-3">Gracias por confiar en CJ Marine. Navega seguro, navega con nosotros. © 2025 CJ Marine. Mejor Trato, Mejor Precio!.</p>
+                </div>
+
+                <div class = "col-md-6 col-lg-3">
+                    <h5 class = "fw-light">Links</h5>
+                    <ul class = "list-unstyled">
+                        <li class = "my-3">
+                            <a href = "#header" class = "text-white text-decoration-none text-muted">
+                                <i class = "fas fa-chevron-right me-1"></i> Inicio
+                            </a>
+                        </li>
+                        <li class = "my-3">
+                            <a href = "#brand" class = "text-white text-decoration-none text-muted">
+                                <i class = "fas fa-chevron-right me-1"></i> Marcas
+                            </a>
+                        </li>
+                        <li class = "my-3">
+                            <a href = "#showroom" class = "text-white text-decoration-none text-muted">
+                                <i class = "fas fa-chevron-right me-1"></i> Showroom
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class = "col-md-6 col-lg-3">
+                    <h5 class = "fw-light mb-3">Contáctanos</h5>
+                    <div class = "d-flex justify-content-start align-items-start my-2 text-muted">
+                        <span class = "me-3">
+                            <i class = "fas fa-envelope"></i>
+                        </span>
+                        <span class = "fw-light">
+                            cjmarinepr@gmail.com
+                        </span>
+                    </div>
+                    <div class = "d-flex justify-content-start align-items-start my-2 text-muted">
+                        <span class = "me-3">
+                            <i class = "fas fa-phone-alt"></i>
+                        </span>
+                        <span class = "fw-light">
+                             939-200-3820
+                        </span>
+                    </div>
+                </div>
+
+                <div class = "col-md-6 col-lg-3">
+                    <h5 class = "fw-light mb-3">Síguenos</h5>
+                    <div>
+                        <ul class = "list-unstyled d-flex">
+                            <li>
+                                <a href = "https://www.facebook.com/share/1ceiBdBDiK/" class = "text-white text-decoration-none text-muted fs-4 me-4">
+                                    <i class = "fab fa-facebook-f"></i>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href = "https://www.instagram.com/cjmarine_pr?igsh=ODZ5cjh1NThpeWF3&utm_source=qr" class = "text-white text-decoration-none text-muted fs-4 me-4">
+                                    <i class = "fab fa-instagram"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jquery -->
+    <script src = "js/jquery-3.6.0.js"></script>
+    <!-- isotope js -->
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+    <!-- bootstrap js -->
+    <script src = "bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
+    <!-- scriptjs -->
+    <script src = "js/script.js"></script>
+    <!-- AOS Animate On Scroll JS -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        once: true,
+        duration: 600,
+        easing: 'ease-in-out'
+      });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function(){
+    emailjs.init("82IJZaMlQMXi8_jjc"); 
+  })();
+
+  document.getElementById("contactForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    emailjs.sendForm("service_95hi6bn", "template_peqm8ik", this)
+      .then(() => {
+        alert("✅ ¡Mensaje enviado! Revisa tu correo.");
+        document.getElementById("contactForm").reset();
+      }, (error) => {
+        alert("❌ Error al enviar: " + JSON.stringify(error));
+      });
+     emailjs.sendForm("service_95hi6bn", "template_p595vxx", this)
+    .then(() => {
+ 
+      document.getElementById("contactForm").reset();
+    }, (error) => {
+     
+    });
+  });
+</script>
+
+</body>
+</html>
