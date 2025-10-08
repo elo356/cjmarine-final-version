@@ -95,6 +95,35 @@
         div[style*="height:128px"] { height: 48px !important; }
       }
 
+      /* Hide navbar on mobile devices */
+      @media (max-width: 767.98px) {
+        .navbar {
+          display: none !important;
+        }
+        /* Adjust header padding since navbar is hidden */
+        #header .header-content {
+          padding-top: 60px !important;
+        }
+      }
+
+      /* Prevent horizontal scroll on mobile */
+      @media (max-width: 767.98px) {
+        * {
+          max-width: 100% !important;
+          box-sizing: border-box;
+        }
+        body {
+          overflow-x: hidden !important;
+          width: 100% !important;
+        }
+        .container-fluid, .container {
+          max-width: 100% !important;
+          overflow: hidden !important;
+          padding-left: 15px !important;
+          padding-right: 15px !important;
+        }
+      }
+
   /* Header video background */
   #header {
     position: relative;
@@ -337,7 +366,7 @@
         </div>
         <!-- Video fuera del .container para ancho completo -->
         <div class="showroom-video" data-aos="zoom-in" data-aos-delay="150">
-            <video src="image/vid.mp4" poster="image/showroom/show1.jpeg" autoplay loop muted playsinline class="showroom-video enhanced-video"></video>
+            <video src="image/vid-tienda.mp4" poster="image/showroom/show1.jpeg" autoplay loop muted playsinline class="showroom-video enhanced-video"></video>
         </div>
         <!-- Espacio y texto entre video y carrusel -->
         <div style="height:96px;"></div>
