@@ -95,14 +95,44 @@
         div[style*="height:128px"] { height: 48px !important; }
       }
 
-      /* Hide navbar on mobile devices */
+      /* Mobile navbar adjustments */
       @media (max-width: 767.98px) {
         .navbar {
-          display: none !important;
+          padding: 0.5rem 1rem !important;
+          height: auto !important;
+          min-height: 60px;
         }
-        /* Adjust header padding since navbar is hidden */
-        #header .header-content {
-          padding-top: 60px !important;
+        .navbar-brand {
+          font-size: 1.2rem !important;
+        }
+        .navbar-brand span {
+          font-size: 1.2rem !important;
+          white-space: nowrap !important;
+        }
+        .navbar-logo-responsive {
+          height: 35px !important;
+          max-width: 80px !important;
+        }
+        .navbar-nav {
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(10px);
+          border-radius: 10px;
+          padding: 15px;
+          margin-top: 10px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .nav-link {
+          padding: 8px 16px !important;
+          font-size: 0.9rem !important;
+          border-radius: 6px;
+          margin: 2px 0;
+        }
+        .navbar-toggler {
+          border: none !important;
+          padding: 4px 6px !important;
+        }
+        .navbar-toggler:focus {
+          box-shadow: none !important;
         }
       }
 
@@ -157,7 +187,7 @@
     width: 100%;
     max-width: 900px;
     margin: 0 auto;
-    padding: 120px 16px 80px;
+    padding: 400px 16px 80px;
     text-align: center;
     color: #fff;
   }
@@ -180,6 +210,49 @@
     padding: 0.85rem 2.1rem;
     border-radius: 999px;
     box-shadow: 0 6px 24px rgba(37,99,235,0.13);
+  }
+
+  /* Header Logo Styles */
+  .header-logo {
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-logo-img {
+    height: 350px;
+    width: auto;
+    filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.5));
+  }
+
+  /* Responsive adjustments for header logo */
+  @media (max-width: 768px) {
+    .header-logo {
+      top: 80px;
+    }
+    .header-logo-img {
+      height: 250px;
+    }
+    #header .header-content {
+      padding: 400px 16px 80px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .header-logo {
+      top: 70px;
+    }
+    .header-logo-img {
+      height: 200px;
+    }
+    #header .header-content {
+      padding: 350px 16px 80px;
+    }
   }
     </style>
 </head>
@@ -223,6 +296,12 @@
     <header id="header">
   <video class="header-bg-video" src="image/hvid3.mp4" type="video/mp4" autoplay loop muted playsinline></video>
   <div class="header-overlay"></div>
+  
+  <!-- Header Logo -->
+  <div class="header-logo">
+    <img src="image/logo/logo3-removebg-preview.png" alt="CJ Marine Logo" class="header-logo-img">
+  </div>
+  
   <div class="header-content">
     <h1 class="header-title">Mejor trato, Mejor Precio!</h1>
     <p class="header-subtitle">Piezas, accesorios y servicio para que siempre estés listo para navegar.</p>
@@ -394,6 +473,8 @@
                     <div class="showroom-card showroom-img-custom"><img src="image/showroom/show14.jpeg" alt="Showroom 14"></div>
                     <div class="showroom-card showroom-img-custom"><img src="image/showroom/show15.jpeg" alt="Showroom 15"></div>
                     <div class="showroom-card showroom-img-custom"><img src="image/showroom/show17.jpeg" alt="Showroom 17"></div>
+                    <div class="showroom-card showroom-img-custom"><img src="image/store-front.jpeg" alt="Showroom 18"></div>
+                    <div class="showroom-card showroom-img-custom"><img src="image/item1.jpeg" alt="Showroom 18"></div>
                 </div>
             </div>
             <button class="showroom-btn showroom-btn-right" id="showroomNext"><i class="fas fa-chevron-right"></i></button>

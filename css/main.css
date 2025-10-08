@@ -5,7 +5,7 @@
 :root {
     --lg-font: 'Kaisei Tokumin', serif;
     --sm-font: 'Poppins', sans-serif;
-    --pink: #e5345b;
+    --pink: #366ee7;
     --dark: #1e293b;
     --light: #f9fafb;
 }
@@ -226,7 +226,7 @@ footer a:hover {
     gap: 20px;
     min-width: 200%;
     width: max-content;
-    animation: brandSlider 120s linear infinite;
+    animation: brandSlider 20s linear infinite;
 }
 .brand-slider img {
     filter: grayscale(0.2) brightness(0.95) drop-shadow(0 2px 8px rgba(0,0,0,0.08));
@@ -298,10 +298,10 @@ footer a:hover {
 }
 @media (max-width: 991.98px) {
     .showroom-card {
-        min-width: 140px;
-        max-width: 200px;
-        width: 32vw;
-        height: 220px;
+        min-width: 180px;
+        max-width: 240px;
+        width: 40vw;
+        height: 280px;
         border-radius: 0.8rem;
     }
     .showroom-card img {
@@ -310,14 +310,14 @@ footer a:hover {
 }
 @media (max-width: 575.98px) {
     .showroom-card {
-        min-width: 80px;
-        max-width: 120px;
-        width: 48vw;
-        height: 120px;
-        border-radius: 0.5rem;
+        min-width: 200px;
+        max-width: 280px;
+        width: 70vw;
+        height: 280px;
+        border-radius: 0.8rem;
     }
     .showroom-card img {
-        border-radius: 0.5rem;
+        border-radius: 0.8rem;
     }
 }
 .showroom-btn {
@@ -547,4 +547,26 @@ img, video { max-width: 100%; height: auto; display: block; }
 }
 @media (max-width: 575.98px) {
   .info-hours p { font-size: 1rem; }
+  
+  /* Increase image sizes on mobile */
+  .collection-img, .special-img {
+    min-height: 250px !important;
+  }
+  
+  .collection-img img, .special-img img {
+    min-height: 250px !important;
+    object-fit: cover !important;
+  }
+  
+  /* Brand slider images bigger on mobile */
+  .brand-slider img {
+    height: 90px !important;
+    margin-right: 4rem !important;
+  }
+  
+  /* General image improvements for mobile */
+  img {
+    min-width: auto !important;
+    max-width: 100% !important;
+  }
 }
