@@ -173,7 +173,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const headerVideo = document.querySelector('.header-bg-video');
   
   if (headerVideo) {
-    // Remove any controls
     headerVideo.controls = false;
     headerVideo.removeAttribute('controls');
     
@@ -181,22 +180,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const playVideo = () => {
       headerVideo.play().catch(error => {
         console.log('Autoplay failed:', error);
-        // Try again after user interaction
         document.addEventListener('click', () => {
           headerVideo.play().catch(e => console.log('Manual play failed:', e));
         }, { once: true });
       });
     };
     
-    // Try to play immediately
     playVideo();
-    
-    // Ensure video keeps playing
+
     headerVideo.addEventListener('pause', () => {
       setTimeout(() => headerVideo.play(), 100);
     });
-    
-    // Handle video load
     headerVideo.addEventListener('loadedmetadata', playVideo);
     headerVideo.addEventListener('canplay', playVideo);
   }
