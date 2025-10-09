@@ -226,7 +226,7 @@ footer a:hover {
     gap: 20px;
     min-width: 200%;
     width: max-content;
-    animation: brandSlider 20s linear infinite;
+    animation: brandSlider 12s linear infinite;
 }
 .brand-slider img {
     filter: grayscale(0.2) brightness(0.95) drop-shadow(0 2px 8px rgba(0,0,0,0.08));
