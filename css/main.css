@@ -317,24 +317,51 @@ footer a:hover {
 }
 @media (max-width: 575.98px) {
     .showroom-card {
-        min-width: 200px;
-        max-width: 280px;
-        width: 70vw;
-        height: 280px;
+        min-width: 250px;
+        max-width: 300px;
+        width: 80vw;
+        height: 320px;
         border-radius: 0.8rem;
+        margin: 0 15px;
+        flex-shrink: 0;
     }
     .showroom-card img {
         border-radius: 0.8rem;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
     }
     .showroom-carousel-custom {
-        padding: 0 10px;
+        padding: 0 20px;
+        width: 100%;
+        overflow: hidden;
     }
     .showroom-track-cards {
-        justify-content: center;
-        padding: 0 1vw;
+        justify-content: flex-start;
+        padding: 0 20px;
+        gap: 30px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
     }
     .showroom-track-wrapper-cards {
-        padding: 1.5rem 0;
+        padding: 2rem 0;
+        width: 100%;
+        overflow: hidden;
+    }
+    
+    /* Scroll snap for better mobile experience */
+    .showroom-card {
+        scroll-snap-align: center;
+    }
+    
+    /* Hide scrollbar but keep functionality */
+    .showroom-track-cards::-webkit-scrollbar {
+        display: none;
+    }
+    .showroom-track-cards {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
 }
 .showroom-btn {
