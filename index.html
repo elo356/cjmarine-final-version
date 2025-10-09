@@ -254,6 +254,20 @@
       padding: 280px 16px 80px;
     }
   }
+
+  /* Force hide video controls */
+  .header-bg-video::-webkit-media-controls {
+    display: none !important;
+  }
+  .header-bg-video::-webkit-media-controls-panel {
+    display: none !important;
+  }
+  .header-bg-video::-webkit-media-controls-play-button {
+    display: none !important;
+  }
+  .header-bg-video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+  }
     </style>
 </head>
 <body>
@@ -294,7 +308,19 @@
 
     <!-- header -->
     <header id="header">
-  <video class="header-bg-video" src="image/hvid3.mp4" type="video/mp4" autoplay loop muted playsinline></video>
+  <video class="header-bg-video" 
+         src="image/hvid3.mp4" 
+         type="video/mp4" 
+         autoplay 
+         loop 
+         muted 
+         playsinline 
+         preload="auto"
+         controls="false"
+         webkit-playsinline
+         x5-playsinline
+         x5-video-player-type="h5"
+         x5-video-player-fullscreen="true"></video>
   <div class="header-overlay"></div>
   
   <!-- Header Logo -->
@@ -335,13 +361,13 @@
           <div class="col-12" data-aos="zoom-in" data-aos-delay="120">
             <div class="info-hours p-4 p-md-5 rounded-4 shadow-sm d-flex flex-column flex-md-row align-items-center gap-3">
               <!-- Reworked: icon inside h3 and same classes as Misión/Visión -->
-              <div class="text-center text-md-start">
+              <div class="text-md-start">
                 <h3 class="text-primary mb-3">
                   <i class="fas fa-clock me-2"></i>Horario
                 </h3>
                 <p class="mb-0">
-                  <strong>Lunes a Viernes:</strong> 9:00 a.m. - 5:00 p.m. •
-                  <strong>Sábados:</strong> 9:00 a.m. - 4:00 p.m.
+                  <strong>• Lunes a Viernes:</strong> 9:00 a.m. - 5:00 p.m. 
+                  <strong></br>• Sábados:</strong> 9:00 a.m. - 4:00 p.m.
                 </p>
               </div>
             </div>
@@ -658,6 +684,42 @@
     });
   });
 </script>
+
+    <script>
+      // Force video autoplay
+      document.addEventListener('DOMContentLoaded', function() {
+        const headerVideo = document.querySelector('.header-bg-video');
+        
+        if (headerVideo) {
+          // Remove any controls
+          headerVideo.controls = false;
+          headerVideo.removeAttribute('controls');
+          
+          // Force play
+          const playVideo = () => {
+            headerVideo.play().catch(error => {
+              console.log('Autoplay failed:', error);
+              // Try again after user interaction
+              document.addEventListener('click', () => {
+                headerVideo.play().catch(e => console.log('Manual play failed:', e));
+              }, { once: true });
+            });
+          };
+          
+          // Try to play immediately
+          playVideo();
+          
+          // Ensure video keeps playing
+          headerVideo.addEventListener('pause', () => {
+            setTimeout(() => headerVideo.play(), 100);
+          });
+          
+          // Handle video load
+          headerVideo.addEventListener('loadedmetadata', playVideo);
+          headerVideo.addEventListener('canplay', playVideo);
+        }
+      });
+    </script>
 
 </body>
 </html>
