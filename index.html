@@ -30,9 +30,9 @@
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 fixed-top shadow-sm" nav>
         <div class="container-fluid px-3 px-md-4">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html" style="min-width:0;">
+            <a class="navbar-brand d-flex align-items-center gap-2 navbar-brand-custom" href="index.html">
                 <img src="image/logo/logo3-removebg-preview.png" alt="site icon" class="d-inline-block align-text-top me-2 navbar-logo-responsive">
-                <span class="text-uppercase fw-lighter" style="font-size:2rem; white-space:nowrap;">CJ Marine</span>
+                <span class="text-uppercase fw-lighter navbar-title">CJ Marine</span>
             </a>
             <button class="navbar-toggler border-0 ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -148,7 +148,7 @@
     <div class="info-separator" data-aos="fade-in" data-aos-delay="50"></div>
 
     <!-- Sección Marcas Trabajadas -->
-    <section id="brand" class="py-5" style="background: linear-gradient(120deg, #e0e7ef 0%, #f8fafc 100%);" data-aos="fade-up" data-aos-duration="600">
+    <section id="brand" class="py-5 brand-section" data-aos="fade-up" data-aos-duration="600">
         <div class="container">
             <div class="text-center mb-5" data-aos="zoom-in" data-aos-delay="100">
                 <h2 class="display-4 fw-bold text-primary mb-3">Marcas Trabajadas</h2>
@@ -166,7 +166,7 @@
                 </div>
             </div>
             <!-- Slider de logos de marcas -->
-            <div class="brand-slider-box mx-auto" style="max-width:900px;" data-aos="fade-up" data-aos-delay="200">
+            <div class="brand-slider-box mx-auto brand-slider-container" data-aos="fade-up" data-aos-delay="200">
                 <div class="brand-slider position-relative overflow-hidden py-4 rounded-4 shadow-lg bg-white">
                     <div class="brand-slider-track">
                         <img src="image/logo/brands/10a7dfaa3fb331e15bb0491016f6c162.png" alt="Marca" />
@@ -212,7 +212,7 @@
             </div>
         </div>
         <!-- Texto arriba del carrusel -->
-        <div class="text-center mb-4" style="font-size:1.25rem; color:#2563eb; font-weight:500;">
+        <div class="text-center mb-4 showroom-text-above">
         </br>
         </div>
 
@@ -220,12 +220,12 @@
             <video src="image/vid-tienda.mp4" poster="image/showroom/show1.jpeg" autoplay loop muted playsinline class="showroom-video enhanced-video"></video>
         </div>
 
-        <div style="height:96px;"></div>
-        <div class="text-center mb-4" style="font-size:1.25rem; color:#384258; font-weight:500;">
+        <div class="showroom-spacing-1"></div>
+        <div class="text-center mb-4 showroom-text-below">
             <p>Explora nuestro showroom virtual y conoce nuestra tienda por dentro. Vive la experiencia de visitarnos y descubre todo lo que tenemos preparado para ti.</br></br></br></br></br></p>
         </div>
 
-        <div class="showroom-carousel-custom position-relative" data-aos="fade-up" data-aos-delay="200" style="max-width:100vw;margin:0 auto;">
+        <div class="showroom-carousel-custom position-relative showroom-carousel-container" data-aos="fade-up" data-aos-delay="200">
             <button class="showroom-btn showroom-btn-left" id="showroomPrev"><i class="fas fa-chevron-left"></i></button>
             <div class="showroom-track-wrapper-cards overflow-hidden">
                 <div class="showroom-track-cards d-flex align-items-center" id="showroomTrack">
@@ -252,24 +252,23 @@
             <button class="showroom-btn showroom-btn-right" id="showroomNext"><i class="fas fa-chevron-right"></i></button>
         </div>
 
-        <div style="height:128px;"></div>
+        <div class="showroom-spacing-2"></div>
         <div class="container">
         </div>
     </section>
     <!-- Sección de Contacto -->
 
-    <section id="contacto" class="bg-light" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;" data-aos="fade-up" data-aos-duration="600">
+    <section id="contacto" class="bg-light contacto-section" data-aos="fade-up" data-aos-duration="600">
         <div class="container">
             <div class="row justify-content-center mb-4">
-                <div class="col-lg-7 text-center" data-aos="fade-down" data-aos-delay="100">
+                <div class="col-lg-7 text-center" data-aos="fade-down" data-aos_delay="100">
                     <h2 class="display-5 fw-bold mb-3 text-primary">Contáctanos</h2>
                     <p class="lead text-muted">¿Tienes preguntas o necesitas una cotización? Completa el formulario y te responderemos pronto.</p>
                 </div>
             </div>
             <div class="row justify-content-center align-items-stretch">
                 <div class="col-lg-6 mb-4" data-aos="fade-right" data-aos-delay="150">
-                    <form id="contactForm" class="p-4 rounded-4 shadow-sm bg-white border border-2" 
-      style="max-width: 480px; margin: auto; font-family: 'Segoe UI', 'Arial', sans-serif;">
+                    <form id="contactForm" class="p-4 rounded-4 shadow-sm bg-white border border-2 contact-form">
     <div class="form-floating mb-3">
         <input type="text" class="form-control border-0 border-bottom rounded-0 bg-light" 
                id="nombre" name="nombre" placeholder="Nombre" required>
@@ -293,9 +292,8 @@
         <label for="causa" class="text-secondary">Motivo del mensaje</label>
     </div>
     <div class="form-floating mb-4">
-        <textarea class="form-control border-0 border-bottom rounded-0 bg-light" 
-                  placeholder="Mensaje" id="mensaje" name="mensaje" 
-                  style="height: 120px; min-height: 80px;" required></textarea>
+        <textarea class="form-control border-0 border-bottom rounded-0 bg-light contact-textarea" 
+                  placeholder="Mensaje" id="mensaje" name="mensaje" required></textarea>
         <label for="mensaje" class="text-secondary">Mensaje</label>
     </div>
     <div class="d-grid">
@@ -307,8 +305,8 @@
 
                 </div>
                 <div class="col-lg-6 mb-4 d-flex align-items-stretch" data-aos="fade-left" data-aos-delay="200">
-                    <div class="w-100 rounded-4 overflow-hidden shadow" style="min-height: 60vh; height: 100%;">
-                        <iframe src="https://www.google.com/maps?q=CJ%20Marine%20Aguadilla&z=15&output=embed" width="100%" height="100%" style="border:0; min-height: 60vh; height: 100%; width: 100%;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <div class="w-100 rounded-4 overflow-hidden shadow map-container">
+                        <iframe src="https://www.google.com/maps?q=CJ%20Marine%20Aguadilla&z=15&output=embed" width="100%" height="100%" class="contact-map" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </div>
@@ -398,5 +396,6 @@
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <!-- scriptjs -->
     <script src = "js/script.js"></script>
-</body>
+  </body>
 </html>
+
