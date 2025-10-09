@@ -226,7 +226,7 @@ footer a:hover {
     gap: 20px;
     min-width: 200%;
     width: max-content;
-    animation: brandSlider 12s linear infinite;
+    animation: brandSlider 20s linear infinite;
 }
 .brand-slider img {
     filter: grayscale(0.2) brightness(0.95) drop-shadow(0 2px 8px rgba(0,0,0,0.08));
@@ -255,9 +255,6 @@ footer a:hover {
     position: relative;
     padding: 0 0.5vw;
     box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 .showroom-track-wrapper-cards {
     width: 100%;
@@ -267,9 +264,6 @@ footer a:hover {
     box-shadow: 0 4px 32px 0 rgba(0,0,0,0.10);
     padding: 2.5rem 0;
     margin-bottom: 0.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 .showroom-track-cards {
     transition: transform 0.7s cubic-bezier(.77,0,.18,1);
@@ -278,7 +272,6 @@ footer a:hover {
     padding: 0 2vw;
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 .showroom-card {
     background: #fff;
@@ -325,16 +318,6 @@ footer a:hover {
     }
     .showroom-card img {
         border-radius: 0.8rem;
-    }
-    .showroom-carousel-custom {
-        padding: 0 10px;
-    }
-    .showroom-track-cards {
-        justify-content: center;
-        padding: 0 1vw;
-    }
-    .showroom-track-wrapper-cards {
-        padding: 1.5rem 0;
     }
 }
 .showroom-btn {
