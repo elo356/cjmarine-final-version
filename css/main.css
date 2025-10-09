@@ -326,6 +326,16 @@ footer a:hover {
     .showroom-card img {
         border-radius: 0.8rem;
     }
+    .showroom-carousel-custom {
+        padding: 0 10px;
+    }
+    .showroom-track-cards {
+        justify-content: center;
+        padding: 0 1vw;
+    }
+    .showroom-track-wrapper-cards {
+        padding: 1.5rem 0;
+    }
 }
 .showroom-btn {
     position: absolute;
