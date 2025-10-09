@@ -128,3 +128,76 @@ window.onscroll = function(){
   }
   scroll1 = scroll2;
 }
+
+// AOS Initialization
+document.addEventListener('DOMContentLoaded', function() {
+  AOS.init({
+    once: true,
+    duration: 600,
+    easing: 'ease-in-out'
+  });
+});
+
+// EmailJS Initialization and Contact Form Handler
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize EmailJS
+  (function(){
+    emailjs.init("82IJZaMlQMXi8_jjc"); 
+  })();
+
+  // Contact form handler
+  const contactForm = document.getElementById("contactForm");
+  if (contactForm) {
+    contactForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      emailjs.sendForm("service_95hi6bn", "template_peqm8ik", this)
+        .then(() => {
+          alert("✅ ¡Mensaje enviado! Revisa tu correo.");
+          document.getElementById("contactForm").reset();
+        }, (error) => {
+          alert("❌ Error al enviar: " + JSON.stringify(error));
+        });
+       emailjs.sendForm("service_95hi6bn", "template_p595vxx", this)
+      .then(() => {
+        document.getElementById("contactForm").reset();
+      }, (error) => {
+       
+      });
+    });
+  }
+});
+
+// Force video autoplay
+document.addEventListener('DOMContentLoaded', function() {
+  const headerVideo = document.querySelector('.header-bg-video');
+  
+  if (headerVideo) {
+    // Remove any controls
+    headerVideo.controls = false;
+    headerVideo.removeAttribute('controls');
+    
+    // Force play
+    const playVideo = () => {
+      headerVideo.play().catch(error => {
+        console.log('Autoplay failed:', error);
+        // Try again after user interaction
+        document.addEventListener('click', () => {
+          headerVideo.play().catch(e => console.log('Manual play failed:', e));
+        }, { once: true });
+      });
+    };
+    
+    // Try to play immediately
+    playVideo();
+    
+    // Ensure video keeps playing
+    headerVideo.addEventListener('pause', () => {
+      setTimeout(() => headerVideo.play(), 100);
+    });
+    
+    // Handle video load
+    headerVideo.addEventListener('loadedmetadata', playVideo);
+    headerVideo.addEventListener('canplay', playVideo);
+  }
+});
