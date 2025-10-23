@@ -292,7 +292,6 @@ nextBtn.click();
         card.style.transform = 'scale(0.7)';
         card.style.opacity = 0.1;
         card.style.zIndex = 0;
-        card.style.filter = 'blur(2px)';
       }
     });
   }
