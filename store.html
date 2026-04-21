@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda - CJ Marine</title>
+    <link rel="icon" href="image/logo/logo3-removebg-preview.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/store.css">
+</head>
+<body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 fixed-top shadow-sm">
+        <div class="container-fluid px-3 px-md-4">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <img src="image/logo/logo3-removebg-preview.png" alt="site icon" class="navbar-logo-responsive">
+                <span class="text-uppercase fw-lighter navbar-title">CJ Marine</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse mt-3 mt-lg-0" id="navMenu">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-center gap-lg-2">
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase text-dark" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase text-dark active" href="store.html">Tienda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase text-dark" href="index.html#contacto">Contáctanos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase text-dark position-relative" href="cart.html">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge bg-danger position-absolute top-0 start-100 translate-middle" id="cartCount">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="store-container mt-5 pt-3">
+        <!-- Header -->
+        <section class="store-header bg-light py-5">
+            <div class="container">
+                <h1 class="display-4 fw-bold mb-2">Catálogo de Productos</h1>
+                <p class="lead text-muted">Piezas y accesorios para tu bote</p>
+            </div>
+        </section>
+
+        <!-- Filters & Search -->
+        <section class="py-4 border-bottom">
+            <div class="container">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-end-0">
+                                <i class="fas fa-search"></i>
+                            </span>
+                            <input type="text" class="form-control border-start-0" id="searchInput" placeholder="Buscar productos...">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="categoryFilter">
+                            <option value="">Todas las categorías</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="sortFilter">
+                            <option value="name-asc">Nombre (A-Z)</option>
+                            <option value="name-desc">Nombre (Z-A)</option>
+                            <option value="price-asc">Precio (menor a mayor)</option>
+                            <option value="price-desc">Precio (mayor a menor)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Grid -->
+        <section class="py-5">
+            <div class="container">
+                <div id="loadingSpinner" class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                </div>
+                <div class="row g-4" id="productsContainer">
+                    <!-- Products will be loaded here -->
+                </div>
+                <div id="noProducts" class="text-center py-5" style="display: none;">
+                    <h4>No se encontraron productos</h4>
+                    <p class="text-muted">Intenta con otros términos de búsqueda</p>
+                </div>
+
+                <!-- Paginación -->
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <p class="text-center text-muted mb-3" id="pageInfo"></p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <button class="btn btn-outline-primary" id="prevPageBtn" style="display: none;">
+                                <i class="fas fa-chevron-left me-2"></i>Anterior
+                            </button>
+                            <button class="btn btn-primary" id="nextPageBtn" style="display: none;">
+                                Siguiente<i class="fas fa-chevron-right ms-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>CJ Marine</h5>
+                    <p class="text-muted">Tu tienda de confianza para piezas y accesorios náuticos</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Enlaces</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-muted text-decoration-none">Inicio</a></li>
+                        <li><a href="store.html" class="text-muted text-decoration-none">Tienda</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Contacto</h5>
+                    <p class="text-muted">📍 Aguadilla, Puerto Rico</p>
+                </div>
+            </div>
+            <hr class="border-secondary">
+            <p class="text-center text-muted mb-0">&copy; 2026 CJ Marine. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Product Detail Modal -->
+    <div class="modal fade" id="productModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Content loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Firebase Compat -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <!-- Firebase Config -->
+    <script src="js/firebase-config.js"></script>
+    <!-- Store JS -->
+    <script src="js/store.js"></script>
+</body>
+</html>

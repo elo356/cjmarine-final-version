@@ -202,6 +202,38 @@ img, video {
     box-shadow: 0 6px 24px rgba(37,99,235,0.13);
 }
 
+#header .header-cta-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: 2rem;
+}
+
+#header .header-cta-group .btn-connect-now {
+    margin-top: 0;
+}
+
+#header .btn-shop-now {
+    display: inline-block;
+    padding: 0.82rem 2rem;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: all 0.25s ease;
+}
+
+#header .btn-shop-now:hover,
+#header .btn-shop-now:focus {
+    background: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+}
+
 .header-logo {
     position: absolute;
     top: 120px;
