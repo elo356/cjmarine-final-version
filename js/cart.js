@@ -1,8 +1,18 @@
 // Cart.js - Lógica del carrito
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadOnlineStoreConfig();
     displayCart();
     setupCheckoutListener();
+    updateCartCount();
+    document.addEventListener('authChanged', updateCheckoutAccountHint);
+    updateCheckoutAccountHint();
+    updateStoreAvailabilityUI();
+
+    document.addEventListener('onlineStoreConfigChanged', (event) => {
+        updateStoreAvailabilityUI(event.detail.config);
+        displayCart();
+    });
 });
 
 // Mostrar carrito
@@ -13,7 +23,7 @@ function displayCart() {
     if (cart.length === 0) {
         container.style.display = 'none';
         document.getElementById('emptyCart').style.display = 'block';
-        document.getElementById('checkoutBtn').disabled = true;
+        updateCheckoutAvailability();
         return;
     }
 
@@ -52,6 +62,7 @@ function displayCart() {
     `).join('');
 
     updateCartSummary();
+    updateCheckoutAvailability();
 }
 
 // Actualizar cantidad
@@ -105,6 +116,11 @@ function setupCheckoutListener() {
     const checkoutBtn = document.getElementById('checkoutBtn');
     if (checkoutBtn) {
         checkoutBtn.addEventListener('click', () => {
+            if (!isStoreEnabled()) {
+                updateStoreAvailabilityUI();
+                return;
+            }
+
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             if (cart.length > 0) {
                 proceedToCheckout(cart);
@@ -116,11 +132,15 @@ function setupCheckoutListener() {
 // Proceder a checkout
 async function proceedToCheckout(cart) {
     try {
-        // Mostrar modal de información de contacto
-        const contactInfo = prompt('Por favor, ingresa tu correo electrónico:');
-        if (!contactInfo) return;
+        if (!isStoreEnabled()) {
+            throw new Error('store-closed');
+        }
 
-        const phone = prompt('Ingresa tu número de teléfono:');
+        const user = await requireLogin();
+
+        const userDoc = await db.collection('users').doc(user.uid).get();
+        const savedPhone = userDoc.exists ? userDoc.data().phone : '';
+        const phone = savedPhone || prompt('Ingresa tu numero de telefono:');
         if (!phone) return;
 
         // Calcular totales
@@ -128,33 +148,110 @@ async function proceedToCheckout(cart) {
         const taxes = subtotal * 0.115;
         const total = subtotal + taxes;
 
-        // Crear orden
-        const order = {
-            items: cart,
-            email: contactInfo,
-            phone: phone,
-            subtotal: subtotal,
-            taxes: taxes,
-            total: total,
-            createdAt: new Date().toISOString(),
-            status: 'pending'
-        };
-
-        // Guardar en Firebase
-        const docRef = await db.collection('orders').add(order);
+        const docRef = await createOnlineOrder(cart, user, phone, { subtotal, taxes, total });
+        await db.collection('users').doc(user.uid).set({ phone }, { merge: true });
         
         // Limpiar carrito
         localStorage.removeItem('cart');
         
         // Mostrar confirmación
-        alert(`¡Orden creada exitosamente!\n\nNúmero de orden: ${docRef.id}\n\nTotal: $${total.toFixed(2)}\n\nNos pondremos en contacto pronto.`);
+        alert(`Orden creada exitosamente!\n\nNumero de orden: ${docRef.id}\n\nTotal: $${total.toFixed(2)}\n\nPuedes verla en Mi Cuenta.`);
         
         // Redirigir a tienda
         window.location.href = 'store.html';
         
     } catch (error) {
+        if (error.message === 'auth-required') return;
+        if (error.message === 'store-closed') {
+            alert('La tienda está temporalmente cerrada. No se puede procesar el pago.');
+            return;
+        }
         console.error('Error en checkout:', error);
-        alert('Error al crear la orden. Por favor, intenta de nuevo.');
+        alert(error.message || 'Error al crear la orden. Por favor, intenta de nuevo.');
+    }
+}
+
+async function createOnlineOrder(cart, user, phone, totals) {
+    const orderRef = db.collection('onlineOrders').doc();
+    const productRefs = cart.map((item) => db.collection('products').doc(item.id));
+
+    await db.runTransaction(async (transaction) => {
+        const productSnapshots = [];
+
+        for (const productRef of productRefs) {
+            productSnapshots.push(await transaction.get(productRef));
+        }
+
+        const orderItems = cart.map((item, index) => {
+            const productDoc = productSnapshots[index];
+            if (!productDoc.exists) {
+                throw new Error(`El producto ${item.name || item.id} ya no existe.`);
+            }
+
+            const productData = productDoc.data();
+            const requestedQuantity = Number(item.quantity) || 1;
+            const currentStock = Number(productData.stock) || 0;
+
+            if (requestedQuantity > currentStock) {
+                throw new Error(`No hay suficiente stock para ${productData.name || item.name}. Disponible: ${currentStock}.`);
+            }
+
+            return {
+                id: item.id,
+                name: productData.name || item.name,
+                sku: productData.sku || item.sku || '',
+                price: Number(productData.price ?? item.price ?? 0),
+                image: productData.image || item.image || '',
+                quantity: requestedQuantity,
+                stockBeforeOrder: currentStock,
+                stockAfterOrder: currentStock - requestedQuantity
+            };
+        });
+
+        orderItems.forEach((item, index) => {
+            transaction.update(productRefs[index], {
+                stock: item.stockAfterOrder,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        });
+
+        transaction.set(orderRef, {
+            orderNumber: orderRef.id,
+            source: 'online_store',
+            channel: 'storefront',
+            items: orderItems,
+            userId: user.uid,
+            customerName: user.displayName || '',
+            email: user.email,
+            phone: phone,
+            subtotal: totals.subtotal,
+            taxes: totals.taxes,
+            total: totals.total,
+            paymentStatus: 'pending',
+            fulfillmentStatus: 'new',
+            status: 'pending',
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    });
+
+    return orderRef;
+}
+
+function updateCheckoutAccountHint() {
+    const hint = document.getElementById('checkoutAccountHint');
+    if (!hint) return;
+
+    if (!isStoreEnabled()) {
+        hint.textContent = 'La tienda está cerrada temporalmente. El checkout no está disponible.';
+        return;
+    }
+
+    const user = getCurrentUser();
+    if (user) {
+        hint.textContent = `Comprando como ${user.email}. La orden se guardara en Mi Cuenta.`;
+    } else {
+        hint.textContent = 'Necesitas entrar a tu cuenta para guardar el historial de compra.';
     }
 }
 
@@ -167,4 +264,38 @@ function updateCartCount() {
         cartCountBadge.textContent = count;
         cartCountBadge.style.display = count > 0 ? 'block' : 'none';
     }
+}
+
+function updateCheckoutAvailability() {
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    if (!checkoutBtn) return;
+
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const storeOpen = isStoreEnabled();
+    checkoutBtn.disabled = cart.length === 0 || !storeOpen;
+    checkoutBtn.textContent = storeOpen ? 'Proceder a Pagar' : 'Tienda temporalmente cerrada';
+}
+
+function updateStoreAvailabilityUI(config = getOnlineStoreConfig()) {
+    const closedAlert = document.getElementById('storeClosedAlert');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    const isOpen = config.storeEnabled !== false;
+
+    if (closedAlert) {
+        if (isOpen) {
+            closedAlert.classList.add('d-none');
+            closedAlert.textContent = '';
+        } else {
+            closedAlert.textContent = 'La tienda está temporalmente cerrada. No se aceptan compras por el momento.';
+            closedAlert.classList.remove('d-none');
+        }
+    }
+
+    if (checkoutBtn) {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        checkoutBtn.disabled = cart.length === 0 || !isOpen;
+        checkoutBtn.textContent = isOpen ? 'Proceder a Pagar' : 'Tienda temporalmente cerrada';
+    }
+
+    updateCheckoutAccountHint();
 }

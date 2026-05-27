@@ -33,6 +33,18 @@
                     <li class="nav-item">
                         <a class="nav-link text-uppercase text-dark" href="index.html#contacto">Contáctanos</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase text-dark account-nav-button" href="#" data-auth-link aria-label="Entrar o crear cuenta">
+                            <span class="account-nav-icon"><i class="fas fa-user"></i></span>
+                            <span class="account-nav-label">Cuenta</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase text-dark position-relative" href="cart.html">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge bg-danger position-absolute top-0 start-100 translate-middle" id="cartCount">0</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -62,6 +74,7 @@
                     <div class="card sticky-top" style="top: 100px;">
                         <div class="card-body">
                             <h5 class="card-title mb-4">Resumen del Pedido</h5>
+                            <div id="storeClosedAlert" class="alert alert-warning d-none" role="alert"></div>
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Subtotal:</span>
                                 <span id="subtotal">$0.00</span>
@@ -75,6 +88,7 @@
                                 <strong id="total" class="text-primary">$0.00</strong>
                             </div>
                             <button class="btn btn-primary w-100 mb-2" id="checkoutBtn">Proceder a Pagar</button>
+                            <p class="small text-muted mb-2" id="checkoutAccountHint">Necesitas entrar a tu cuenta para guardar el historial de compra.</p>
                             <a href="store.html" class="btn btn-secondary w-100">Continuar Comprando</a>
                         </div>
                     </div>
@@ -112,9 +126,12 @@
     <script src="bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
     <!-- Firebase Compat -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <!-- Firebase Config -->
     <script src="js/firebase-config.js"></script>
+    <script src="js/online-store-config.js"></script>
+    <script src="js/auth.js"></script>
     <!-- Cart JS -->
     <script src="js/cart.js"></script>
 </body>

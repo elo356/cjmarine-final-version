@@ -34,6 +34,12 @@
                         <a class="nav-link text-uppercase text-dark" href="index.html#contacto">Contáctanos</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link text-uppercase text-dark account-nav-button" href="#" data-auth-link aria-label="Entrar o crear cuenta">
+                            <span class="account-nav-icon"><i class="fas fa-user"></i></span>
+                            <span class="account-nav-label">Cuenta</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link text-uppercase text-dark position-relative" href="cart.html">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="badge bg-danger position-absolute top-0 start-100 translate-middle" id="cartCount">0</span>
@@ -51,6 +57,7 @@
             <div class="container">
                 <h1 class="display-4 fw-bold mb-2">Catálogo de Productos</h1>
                 <p class="lead text-muted">Piezas y accesorios para tu bote</p>
+                <div id="storeClosedAlert" class="alert alert-warning d-none mb-0 mt-3" role="alert"></div>
             </div>
         </section>
 
@@ -161,9 +168,12 @@
     <script src="bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
     <!-- Firebase Compat -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <!-- Firebase Config -->
     <script src="js/firebase-config.js"></script>
+    <script src="js/online-store-config.js"></script>
+    <script src="js/auth.js"></script>
     <!-- Store JS -->
     <script src="js/store.js"></script>
 </body>

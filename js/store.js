@@ -4,12 +4,22 @@ let allProducts = [];
 let filteredProducts = [];
 let currentPage = 0;
 const ITEMS_PER_PAGE = 20;
+let storeAvailability = getOnlineStoreConfig();
 
 // Inicializar la tienda
 document.addEventListener('DOMContentLoaded', async () => {
+    await loadOnlineStoreConfig();
+    storeAvailability = getOnlineStoreConfig();
     await loadProducts();
     setupEventListeners();
     updateCartCount();
+    updateStoreAvailabilityUI();
+
+    document.addEventListener('onlineStoreConfigChanged', (event) => {
+        storeAvailability = event.detail.config;
+        updateStoreAvailabilityUI();
+        displayPage();
+    });
 });
 
 // Cargar productos desde Firebase
@@ -34,6 +44,7 @@ async function loadProducts() {
         
         // Mostrar primera página
         displayPage();
+        updateStoreAvailabilityUI();
         
         
         // Ocultar spinner
@@ -129,7 +140,7 @@ function displayProducts(products) {
                     <div class="product-actions">
                         <button class="btn-add-cart" 
                                 onclick="addToCart(event, '${product.id}')"
-                                ${product.stock <= 0 ? 'disabled' : ''}>
+                                ${product.stock <= 0 || !isStoreEnabled() ? 'disabled' : ''}>
                             <i class="fas fa-shopping-cart"></i> Agregar
                         </button>
                         <button class="btn-view-detail" 
@@ -192,7 +203,7 @@ function viewProductDetail(productId) {
                 <div class="detail-actions">
                     <button class="btn-primary" 
                             onclick="addToCart(null, '${product.id}')"
-                            ${product.stock <= 0 ? 'disabled' : ''}>
+                            ${product.stock <= 0 || !isStoreEnabled() ? 'disabled' : ''}>
                         <i class="fas fa-shopping-cart"></i> Agregar al Carrito
                     </button>
                     <button class="btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -208,6 +219,11 @@ function viewProductDetail(productId) {
 function addToCart(event, productId) {
     if (event) {
         event.stopPropagation();
+    }
+
+    if (!isStoreEnabled()) {
+        showNotification('La tienda está temporalmente cerrada. No se pueden agregar productos.');
+        return;
     }
 
     const product = allProducts.find(p => p.id === productId);
@@ -266,6 +282,20 @@ function updateCartCount() {
         cartCountBadge.textContent = count;
         cartCountBadge.style.display = count > 0 ? 'block' : 'none';
     }
+}
+
+function updateStoreAvailabilityUI() {
+    const closedAlert = document.getElementById('storeClosedAlert');
+    if (!closedAlert) return;
+
+    if (isStoreEnabled()) {
+        closedAlert.classList.add('d-none');
+        closedAlert.textContent = '';
+        return;
+    }
+
+    closedAlert.textContent = 'La tienda está temporalmente cerrada. No se aceptan compras por el momento.';
+    closedAlert.classList.remove('d-none');
 }
 
 // Cargar siguiente página

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Cuenta - CJ Marine</title>
+    <link rel="icon" href="image/logo/logo3-removebg-preview.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/store.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 fixed-top shadow-sm">
+        <div class="container-fluid px-3 px-md-4">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <img src="image/logo/logo3-removebg-preview.png" alt="site icon" class="navbar-logo-responsive">
+                <span class="text-uppercase fw-lighter navbar-title">CJ Marine</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse mt-3 mt-lg-0" id="navMenu">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-center gap-lg-2">
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase text-dark" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase text-dark" href="store.html">Tienda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase text-dark active account-nav-button is-signed-in" href="account.html" data-auth-link aria-label="Mi Cuenta">
+                            <span class="account-nav-icon"><i class="fas fa-user-circle"></i></span>
+                            <span class="account-nav-label">Mi Cuenta</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase text-dark position-relative" href="cart.html">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge bg-danger position-absolute top-0 start-100 translate-middle" id="cartCount">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="account-container mt-5 pt-3 min-vh-100">
+        <section class="store-header py-5">
+            <div class="container">
+                <h1 class="display-5 fw-bold mb-2">Mi Cuenta</h1>
+                <p class="lead mb-0">Perfil, compras en progreso e historial de ordenes</p>
+            </div>
+        </section>
+
+        <section class="py-5">
+            <div class="container">
+                <div id="accountLoading" class="text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                </div>
+
+                <div id="accountContent" style="display: none;">
+                    <div class="row g-4">
+                        <div class="col-lg-4">
+                            <div class="account-panel">
+                                <div class="d-flex align-items-center gap-3 mb-4">
+                                    <div class="account-avatar">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="h5 mb-1" id="profileNameTitle">Cliente</h2>
+                                        <p class="text-muted mb-0" id="profileEmailTitle"></p>
+                                    </div>
+                                </div>
+
+                                <form id="profileForm">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="profileName">Nombre</label>
+                                        <input type="text" class="form-control" id="profileName" autocomplete="name">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="profilePhone">Telefono</label>
+                                        <input type="tel" class="form-control" id="profilePhone" autocomplete="tel">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100 mb-2">Guardar Perfil</button>
+                                    <button type="button" class="btn btn-outline-danger w-100" id="logoutBtn">Cerrar Sesion</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-8">
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-4">
+                                    <div class="account-stat">
+                                        <span id="totalOrders">0</span>
+                                        <small>Ordenes</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="account-stat">
+                                        <span id="activeOrders">0</span>
+                                        <small>En progreso</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="account-stat">
+                                        <span id="totalSpent">$0.00</span>
+                                        <small>Total comprado</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <ul class="nav nav-tabs account-tabs mb-3" id="ordersTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="progress-tab" data-bs-toggle="tab" data-bs-target="#progressOrders" type="button" role="tab">En progreso</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#historyOrders" type="button" role="tab">Historial</button>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="progressOrders" role="tabpanel">
+                                    <div id="progressOrdersList"></div>
+                                </div>
+                                <div class="tab-pane fade" id="historyOrders" role="tabpanel">
+                                    <div id="historyOrdersList"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="accountSignedOut" class="account-panel text-center py-5" style="display: none;">
+                    <i class="fas fa-user-lock fa-3x text-muted mb-3"></i>
+                    <h2 class="h4">Entra a tu cuenta</h2>
+                    <p class="text-muted">Necesitas una cuenta para ver tus compras y ordenes en progreso.</p>
+                    <button class="btn btn-primary" onclick="openAuthModal()">Entrar o crear cuenta</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-white py-5 mt-5">
+        <div class="container">
+            <p class="text-center text-muted mb-0">&copy; 2026 CJ Marine. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/account.js"></script>
+</body>
+</html>
