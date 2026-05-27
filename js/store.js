@@ -285,17 +285,19 @@ function updateCartCount() {
 }
 
 function updateStoreAvailabilityUI() {
-    const closedAlert = document.getElementById('storeClosedAlert');
-    if (!closedAlert) return;
+    const closedBanner = document.getElementById('storeClosedBanner');
+    const storePageContent = document.getElementById('storePageContent');
+    if (!closedBanner || !storePageContent) return;
 
     if (isStoreEnabled()) {
-        closedAlert.classList.add('d-none');
-        closedAlert.textContent = '';
+        closedBanner.classList.add('d-none');
+        storePageContent.classList.remove('d-none');
         return;
     }
 
-    closedAlert.textContent = 'La tienda está temporalmente cerrada. No se aceptan compras por el momento.';
-    closedAlert.classList.remove('d-none');
+    closedBanner.textContent = 'La tienda online está temporalmente bloqueada.';
+    closedBanner.classList.remove('d-none');
+    storePageContent.classList.add('d-none');
 }
 
 // Cargar siguiente página
