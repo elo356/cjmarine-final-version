@@ -33,6 +33,7 @@ async function loadProducts() {
                 id: doc.id,
                 ...doc.data()
             };
+            product.image = getProductImage(product);
             allProducts.push(product);
         });
 
@@ -213,6 +214,11 @@ function viewProductDetail(productId) {
     `;
 
     new bootstrap.Modal(modal).show();
+}
+
+function getProductImage(product) {
+    const image = product?.image || product?.imageUrl || product?.photo || '';
+    return typeof image === 'string' ? image.trim() : '';
 }
 
 // Agregar al carrito
